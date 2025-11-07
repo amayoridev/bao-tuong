@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GIÓ NAM KỲ — THỔI BÙNG NGỌN LỬA KHỞI NGHĨA</title>
+  <meta name="description" content="Trang web dự án báo tường: Nam Kỳ Khởi Nghĩa (1939–1940). Quét QR để xem nội dung mở rộng: giai điệu, thơ, phóng sự, danh ngôn, mốc thời gian."/>
+  <meta name="theme-color" content="#b10000"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;800&family=Playfair+Display:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="./src/vn.png"/>
+  <style>
+    :root{
+      --bg:#0e0b0b;            /* nền đen đất */
+      --ink:#f7f5f2;           /* màu chữ */
+      --red:#b10000;           /* đỏ cách mạng */
+      --gold:#ffd23f;          /* vàng sao */
+      --leaf:#0ca678;          /* xanh Nam Bộ */
+      --card:rgba(255,255,255,.06);
+      --stroke:rgba(255,210,63,0.5);
+      --muted:#d4cfc6;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--ink); background: var(--bg);
+      font-family:"Be Vietnam Pro", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height:1.6; letter-spacing:.1px;
+      overflow-x:hidden;
+    }
+    /* Animated conic gradient aura */
+    .aura{
+      position:fixed; inset:-10vmax; z-index:-2; filter:blur(40px) saturate(1.2);
+      background: conic-gradient(from 0deg at 60% 40%, var(--red), var(--gold), var(--leaf), var(--red));
+      animation: spin 30s linear infinite;
+      opacity:.18;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    /* subtle film grain */
+    .grain{position:fixed; inset:0; pointer-events:none; z-index:-1; opacity:.08;
+      background-image:url('data:image/svg+xml;utf8,\
+      <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">\
+      <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter>\
+      <rect width="100%" height="100%" filter="url(%23n)" opacity="0.35"/>\
+      </svg>');
+      mix-blend-mode:soft-light;
+    }
+    /* Header / Nav */
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter: blur(8px);
+      background:linear-gradient(180deg, rgba(17,15,15,.8), rgba(17,15,15,.35));
+      border-bottom: 1px solid rgba(255,210,63,.18);
+    }
+    .nav{max-width:1100px; margin:auto; display:flex; align-items:center; gap:16px; padding:10px 16px}
+    .brand{display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--ink)}
+    .flag{width:28px; height:20px; border:1px solid rgba(0,0,0,.25); box-shadow:var(--shadow);
+      background:
+        linear-gradient(90deg, transparent 0 27%, rgba(0,0,0,.18) 27% 27.5%, transparent 0),
+        radial-gradient(circle at 60% 50%, var(--gold) 0 24%, transparent 25%),
+        linear-gradient(var(--red), var(--red));
+    }
+    .brand b{font-weight:800; letter-spacing:.4px}
+    nav{margin-left:auto; display:flex; gap:8px; flex-wrap:wrap}
+    nav a{color:var(--muted); text-decoration:none; padding:8px 12px; border-radius:999px; border:1px solid transparent}
+    nav a:hover{color:var(--ink); border-color: rgba(255,210,63,.35); background:rgba(255,210,63,.06)}
+    .cta{background:linear-gradient(90deg, var(--red), var(--leaf)); color:white !important; border:none}
+
+    /* Hero */
+    .hero{max-width:1100px; margin:24px auto 0; padding:40px 16px 24px; display:grid; gap:20px}
+    .kicker{display:inline-flex; align-items:center; gap:8px; font-size:.9rem; color:#f3e7c6}
+    .kicker .dot{width:8px; height:8px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 6px rgba(255,210,63,.15)}
+    h1.title{font-family:"Playfair Display", serif; font-weight:800; line-height:1.05; margin:6px 0 8px; font-size:clamp(2rem, 4vw + .8rem, 3.6rem);}
+    .subtitle{max-width:65ch; color:var(--muted)}
+    .hero-card{display:grid; grid-template-columns:1.2fr .8fr; gap:18px}
+    .card{background:var(--card); border:1px solid var(--stroke); padding:18px; border-radius:18px; box-shadow:var(--shadow)}
+    .ribbon{display:inline-flex; align-items:center; gap:8px; font-size:.8rem; text-transform:uppercase; letter-spacing:.16em; padding:4px 10px; border:1px dashed rgba(255,210,63,.6); border-radius:999px}
+    .badge{display:inline-block; padding:6px 10px; border:1px solid rgba(255,255,255,.2); border-radius:10px; font-size:.85rem; margin-top:6px}
+
+    /* Sections */
+    section{max-width:1100px; margin:36px auto; padding:0 16px}
+    .section-title{font-family:"Playfair Display", serif; font-weight:800; margin:0 0 14px; font-size:clamp(1.4rem, 2vw + .8rem, 2.2rem)}
+    .grid{display:grid; grid-template-columns:repeat(12, 1fr); gap:14px}
+    .span-7{grid-column:span 7}
+    .span-5{grid-column:span 5}
+    .span-6{grid-column:span 6}
+    .span-4{grid-column:span 4}
+    .span-8{grid-column:span 8}
+    @media (max-width:880px){
+      .hero-card{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr}
+    }
+
+    /* Timeline */
+    .timeline{position:relative; padding-left:22px}
+    .timeline::before{content:""; position:absolute; left:7px; top:0; bottom:0; width:2px; background:linear-gradient(var(--gold), transparent)}
+    .t-item{position:relative; margin:14px 0; padding-left:8px}
+    .t-item::marker{content:""}
+    .t-dot{position:absolute; left:-2px; top:.25rem; width:14px; height:14px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 4px rgba(255,210,63,.18)}
+    .t-year{font-weight:700; color:#ffe08a}
+
+    /* Quote pull */
+    blockquote{border-left:3px solid var(--gold); margin:0; padding:12px 14px; color:#f6e7b5; background:rgba(255,210,63,.06); border-radius:12px}
+    cite{display:block; font-size:.9rem; color:#f1d88f; opacity:.9}
+
+    /* Collapsible long texts */
+    details{background:var(--card); border:1px solid var(--stroke); border-radius:14px; padding:14px}
+    details[open]{outline:1px solid rgba(255,210,63,.24)}
+    summary{cursor:pointer; font-weight:600}
+
+    /* Footer */
+    footer{padding:32px 16px 80px; color:var(--muted); text-align:center; border-top:1px solid rgba(255,210,63,.18)}
+
+    /* Reveal animations */
+    .reveal{opacity:0; transform:translateY(10px) scale(.98); transition:opacity .6s ease, transform .7s ease}
+    .reveal.visible{opacity:1; transform:none}
+
+    /* Floating star spark */
+    .spark{position:absolute; width:2px; height:2px; background:var(--gold); border-radius:50%; box-shadow:0 0 8px var(--gold); animation:fall 6s linear infinite}
+    @keyframes fall{0%{transform:translate3d(0,-10vh,0)} 100%{transform:translate3d(30vw,100vh,0)}}
+
+    .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:12px; border:1px solid rgba(255,210,63,.35); color:var(--ink); text-decoration:none}
+    .btn:hover{background:rgba(255,210,63,.08)}
+      /* Logos */
+    .logos{display:flex; align-items:center; gap:10px; margin-left:8px}
+    .logo-round{width:48px; height:48px; border-radius:999px; border:2px dashed rgba(255,210,63,.6); background:rgba(255,210,63,.06); box-shadow:var(--shadow); flex:0 0 48px}
+    .logo-round:hover{background:rgba(255,210,63,.12)}
+    .logos .hint{font-size:.8rem; color:var(--muted)}
+    /* Members */
+    .members{list-style:none; padding-left:0; margin:0}
+    .members li{padding:8px 10px; border:1px solid var(--stroke); border-radius:10px; margin:6px 0; background:rgba(255,255,255,.04)}
+  </style>
+</head>
+<body>
+  <div class="aura" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <header>
+    <div class="nav">
+      <a class="brand" href="#top" aria-label="Trang chủ">
+        <div class="flag" aria-hidden="true"></div>
+        <b>GIÓ NAM KỲ</b>
+      </a>
+      <div class="logos" aria-label="Logo trường/lớp (thay thế sau bằng ảnh)">
+        <!-- Thay src bằng link ảnh logo tròn của bạn, hoặc đặt background qua CSS -->
+        <img class="logo-round" src="./src/logo moi.png" title="Logo 1">
+        <img class="logo-round" src="./src/hhd.png" title="Logo 2">
+      </div>
+      <nav>
+        <a href="#lich-su">Lịch sử</a>
+        <a href="#giai-dieu">Giai điệu</a>
+        <a href="#tho-van">Thơ & Văn</a>
+        <a href="#phong-su">Phóng sự</a>
+        <a href="#thanh-vien">Thành viên</a>
+        <a class="cta" href="#tai-lieu">Tư liệu</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="kicker"><span class="dot"></span>Báo tường Chi đoàn</div>
+      <h1 class="title">GIÓ NAM KỲ — <span style="color:var(--gold)">THỔI BÙNG</span> NGỌN LỬA KHỞI NGHĨA</h1>
+      <p class="subtitle">Trang mở rộng cho ban giám khảo khi quét mã QR: nội dung chọn lọc về <b>Khởi nghĩa Nam Kỳ (1939–1940)</b>, 
+        thiết kế theo phong cách hiện đại, âm hưởng cờ <i>đỏ</i> – <i>vàng</i> với điểm nhấn xanh Nam Bộ. Cuộn xuống để khám phá.</p>
+
+      <div class="hero-card">
+        <div class="card reveal">
+          <div class="ribbon">Thông điệp</div>
+          <h3 style="margin:.6rem 0 0">“Độc lập, tự do hay là chết?”</h3>
+          <p style="margin:.4rem 0 0">Lời thề còn vọng vang khắp Nam Kỳ — khí phách của một thời đứng lên. </p>
+          <a class="btn" href="#lich-su" aria-label="Xem mốc thời gian">➡️ Xem mốc thời gian</a>
+        </div>
+        <div class="card reveal" style="position:relative; min-height:160px">
+          <div class="ribbon">Scan & Explore</div>
+          <!-- Floating sparks -->
+          <div id="sparks" aria-hidden="true"></div>
+          <p style="margin-top:8px">Mẹo: Khi chấm, có thể kéo xuống để mở các đoạn <b>trích</b> (ấn vào tiêu đề), giúp đọc nhanh trên màn hình nhỏ.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="lich-su">
+      <h2 class="section-title">Mốc thời gian</h2>
+      <div class="grid">
+        <div class="span-7">
+          <ol class="timeline">
+            <li class="t-item reveal">
+              <span class="t-dot"></span>
+              <div class="t-year">Tháng 11/1939 — Hội nghị TW VI (Hóc Môn – Bà Điểm)</div>
+              <div>Đề ra chủ trương <b>“Cách mạng giải phóng dân tộc”</b> bằng hình thức <b>“bạo động”</b>.</div>
+            </li>
+            <li class="t-item reveal">
+              <span class="t-dot"></span>
+              <div class="t-year">Đầu 1940 — Chuẩn bị khởi nghĩa</div>
+              <div>Ban Thường vụ Xứ ủy Nam Kỳ khẩn trương chuẩn bị vũ trang.</div>
+            </li>
+            <li class="t-item reveal">
+              <span class="t-dot"></span>
+              <div class="t-year">Tháng 11/1940 — Hội nghị TW VII</div>
+              <div>Nhận định điều kiện chưa chín muồi, cử đồng chí <b>Phan Đăng Lưu</b> về hoãn khởi nghĩa; 
+                song lệnh đã phát đi, không thể thu hồi.</div>
+            </li>
+            <li class="t-item reveal">
+              <span class="t-dot"></span>
+              <div class="t-year">Đêm 22 → rạng sáng 23/11/1940 — Nam Kỳ vùng lên</div>
+              <div>Hóc Môn, Bà Điểm, Cai Lậy, Vũng Liêm… lá cờ <b>đỏ sao vàng</b> lần đầu tung bay; nhiều đồn bốt bị phá, 
+                nhưng cuộc khởi nghĩa bị đàn áp khốc liệt.</div>
+            </li>
+            <li class="t-item reveal">
+              <span class="t-dot"></span>
+              <div class="t-year">2016 — Kỷ niệm 76 năm</div>
+              <div>Hóc Môn họp mặt tưởng niệm; tinh thần quật khởi “sống mãi cùng thời gian”.</div>
+            </li>
+          </ol>
+        </div>
+        <div class="span-5">
+          <div class="card reveal">
+            <blockquote>
+              “Khởi nghĩa Nam Kỳ đã trở thành biểu tượng sáng ngời trong lịch sử cách mạng Việt Nam.”
+              <cite>Trích tư liệu tổng hợp</cite>
+            </blockquote>
+            <p style="margin-top:10px">Xem thêm các đoạn văn dài ở phần <a href="#tai-lieu">Tư liệu</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="giai-dieu">
+      <h2 class="section-title">Giai điệu — <i>Khởi nghĩa Nam Kỳ</i> (Lư Nhất Vũ)</h2>
+      <div class="grid">
+        <div class="span-7">
+          <div class="card reveal">
+            <p><b>Bài hát (trích)</b></p>
+            <details open>
+              <summary>Hiển thị / Thu gọn lời ca</summary>
+              <p>
+                Đây Hóc Môn, kia Bà Điểm,<br/>
+                Mười tám thôn vườn trầu, Mười tám thôn vườn trầu,<br/>
+                Thề quyết đứng lên ta giành lấy chính quyền về tay nhân dân.<br/>
+                Qua Nhà Bè, lên Thủ Đức, đi Bình Điền, xuôi Chợ Đệm,<br/>
+                Từ Chợ Lớn đến Tân An ta đi theo cờ đỏ sao vàng,<br/>
+                Quyết rửa hận thù chung.<br/><br/>
+                Khắp lục tỉnh Nam Kỳ, Từ Đồng Nai cho tới Hòn Khoai,<br/>
+                Nhân dân ta sát vai một lòng,<br/>
+                Đi theo Đảng Cộng sản Việt Nam, Đi theo Đảng Cộng sản Việt Nam,<br/>
+                Thề hy sinh chiến đấu đến cùng.<br/><br/>
+                Độc lập, tự do hay là chết?<br/>
+                Lời thề còn vọng vang khắp Nam Kỳ.<br/>
+                Vùng lên hỡi các nô lệ ở thế gian,<br/>
+                Cùng tiến, chiến đấu xả thân vì nước,<br/>
+                Chiến đấu chống quân xâm lược,<br/>
+                Việt Nam kiên cường, Việt Nam muôn năm.
+              </p>
+            </details>
+          </div>
+        </div>
+        <div class="span-5">
+          <div class="card reveal">
+            <p class="badge">Gợi ý</p>
+            <p>BGK có thể ấn vào đây để nghe nhanh: <a href="https://bcdcnt.net/bai-hat/khoi-nghia-nam-ky-3513.html">link</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tho-van">
+      <h2 class="section-title">Thơ & Văn</h2>
+      <div class="grid">
+        <div class="span-6">
+          <div class="card reveal">
+            <h3>Ca dao — Vè</h3>
+            <details open>
+              <summary>Hiển thị / Thu gọn</summary>
+              <p>Ca dao: “Đêm về không ngủ, mẹ ngồi ru con… Để con cầm súng, đuổi thù ra khỏi đất nước.”</p>
+              <p>Vè: “Nam Kỳ khởi nghĩa, súng đồng… Dù bao gian khổ, ta quyết không lùi bước… Đến khi độc lập, ta mới ngơi nghỉ chân.”</p>
+            </details>
+          </div>
+        </div>
+        <div class="span-6">
+          <div class="card reveal">
+            <h3>Danh ngôn — Nguyễn Trung Trực</h3>
+            <blockquote>
+              “Bao giờ Tây nhổ hết cỏ, nước Nam mới hết người Nam đánh Tây.”
+            </blockquote>
+          </div>
+        </div>
+        <div class="span-6">
+          <div class="card reveal">
+            <h3>Văn tế nghĩa sĩ Cần Giuộc (trích dài)</h3>
+            <details>
+              <summary>Mở đoạn trích</summary>
+              <p>
+                Một trận khói tan;<br> Nghìn năm tiết rỡ…<br/>
+                Binh tướng nó hãy đóng sông Bến Nghé, ai làm cho bốn phía mây đen;<br/>
+                Ông cha ta còn ở đất Đồng Nai, ai cứu đặng một phường con đỏ…<br/>
+                Thác mà trả nước non rồi nợ, danh thơm đồn sáu tỉnh chúng đều khen;<br/>
+                Thác mà ưng đền miếu để thờ, tiếng ngay trải muôn đời ai cũng mộ…<br/>
+                Sống đánh giặc, thác cũng đánh giặc, linh hồn theo giúp cơ binh…<br/>
+                Nước mắt anh hùng lau chẳng ráo… Cây hương nghĩa sĩ thắp nên thơm…<br/>
+                Hỡi ơi! Có linh xin hưởng.
+              </p>
+              <p class="badge">Nguồn: Văn học 11; Ngữ văn 11; Thivien.net</p>
+            </details>
+          </div>
+        </div>
+        <div class="span-6">
+          <div class="card reveal">
+            <h3>Thơ Nam Bộ</h3>
+            <details>
+              <summary>“Nam Kỳ cũng gió cũng mưa” (Nguyễn Bính) — trích</summary>
+              <p>
+                Đêm đêm đắp đổi cũng vừa chăn bông…<br/>
+                Mình đi trăm núi ngàn sông…<br/>
+                Thà rằng uổng một đời trai… Chẳng ban áo gấm cũng mài trăng khuya…
+              </p>
+            </details>
+            <details>
+              <summary>“Nỗi đau giữa hòa bình” (Nguyễn Văn Chung) — trích</summary>
+              <p>
+                Người vợ ấy tìm chồng giữa đám đông… Hòa bình đến rồi sao anh vẫn chưa trở về…<br/>
+                Đạn bom đã ngừng bay những vết thương sâu này… Vẫn âm ỉ ngày đêm làm sao nguôi…
+              </p>
+            </details>
+            <details>
+              <summary>“Hồn Nam Kỳ khởi nghĩa” — truyền tụng</summary>
+              <p>
+                Cuộc cờ lỡ pháo, lầm xe… Quyết tâm phá bí ai dè vẫn thua…<br/>
+                Đã đành nhớ núi thương sông… Nằm đây xa cách muôn trùng ải quan…
+              </p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="phong-su">
+      <h2 class="section-title">Phóng sự</h2>
+      <div class="grid">
+        <div class="span-8">
+          <div class="card reveal">
+            <p><i>Phóng sự đầy đủ</i></p>
+            <details open>
+              <summary>Đọc / Thu gọn</summary>
+              <p>
+                Tháng 11 năm 1939, Hội nghị Trung ương Đảng lần thứ VI tại Hóc Môn - Bà Điểm đề
+ra chủ trương "Cách mạng giải phóng dân tộc" bằng hình thức "bạo động".<br>
+Đầu năm 1940, Ban Thường vụ Xứ ủy Nam Kỳ chuẩn bị vũ trang khởi nghĩa.
+Tháng 11 năm 1940, Hội nghị Trung ương Đảng lần thứ VII nhận định điều kiện chưa
+chín muồi và cử đồng chí Phan Đăng Lưu về hoãn khởi nghĩa.<br>
+Đồng chí Phan Đăng Lưu bị địch bắt, lệnh khởi nghĩa đã được phát đi khắp nơi và
+không thể thu hồi. Vào tối ngày 22/11/1940, đồng chí Tạ Uyên và một số đồng chí khác
+trong Thành ủy Sài Gòn đã bị bắt.Pháp đã ra lệnh cấm trại binh lính người Việt và tước
+vũ khí của những người có ý định phản chiến. Kế hoạch dùng tiếng súng để đánh chiếm
+Sài Gòn vào lúc 24 giờ ngày 22/11/1940 đã không thành công.<br>
+Cuộc khởi nghĩa Nam Kỳ bị dập tắt, giặc Pháp điên cuồng đàn áp, khủng bố rất khốc
+liệt, dã man (...). Tấm gương hy sinh dũng cảm của các đồng chí mãi mãi sáng ngời chủ
+nghĩa anh hùng cách mạng Việt Nam. Ngay từ khi được tin Nam Kỳ khởi nghĩa, Ban
+thường vụ Trung ương Đảng đã ra thông báo khẩn cấp, chỉ thị các địa phương chia lửa
+với Nam Kỳ. Từ việc rải truyền đơn, bãi khoá, bãi thị đến việc phát động du kích, nếu
+có điều kiện phá đường, cầu cống ngăn quân thù đàn áp.
+              </p>
+            </details>
+          </div>
+        </div>
+        <div class="span-4">
+          <div class="card reveal">
+            <h3>Ý nghĩa</h3>
+            <p>Cuộc khởi nghĩa thất bại về quân sự nhưng thành công lớn về <b>tinh thần</b>, khơi dậy ý chí giành độc lập, là “mốc son chói lọi”.</p>
+            <blockquote>
+              “Cuộc khởi nghĩa Nam Kỳ là một mốc son chói lọi… để lại những bài học quý báu về tinh thần cách mạng triệt để.”
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="tai-lieu">
+      <h2 class="section-title">Tư liệu lớp biên soạn</h2>
+      <div class="grid">
+        <div class="span-7">
+          <div class="card reveal">
+            <p>Phần này tập hợp các đoạn trích dài (mở theo nhu cầu đọc nhanh trên di động).</p>
+            <details>
+              <summary><b>Truyện ngắn — Lục tỉnh Nam Kỳ khói lửa</b> (trích)</summary>
+              <p>
+                “Trong phủ đường sang trọng của Đại thần triều Nguyễn, hai con trai của Phan Thanh Giản là Phan Tôn và Phan Liêm đang ngồi uống nước và nhớ lại…
+                …Đến như nhà thơ mù Nguyễn Đình Chiểu… Hay là anh và em cũng kêu gọi nhân dân khởi nghĩa đánh Pháp tại quê nhà đi.”
+              </p>
+            </details>
+            <details>
+              <summary><b>Xã luận — Khởi nghĩa Nam Kỳ</b> (trích)</summary>
+              <p>
+                Cuộc khởi nghĩa Nam Kỳ năm 1940 là một mốc son chói lọi trong lịch sử đấu tranh cách mạng của nhân dân
+Việt Nam. Dưới sự lãnh đạo của Đảng, phong trào đã thể hiện ý chí quật cường, tinh thần yêu nước nồng nàn và
+khát vọng giành độc lập, tự do của dân tộc ta. Dù không giành được thắng lợi cuối cùng, song Khởi nghĩa Nam
+Kỳ đã để lại những bài học quý báu về tinh thần cách mạng triệt để, về sự gắn bó máu thịt giữa Đảng và nhân
+dân, về nghệ thuật tổ chức và lãnh đạo khởi nghĩa vũ trang.
+              </p>
+            </details>
+            <details>
+              <summary><b>Ghi chép lễ kỷ niệm (23/11/2016)</b> — Hóc Môn</summary>
+              <p>
+                “76 năm đã đi qua nhưng tinh thần của cuộc Khởi nghĩa Nam Kỳ vẫn luôn sống mãi cùng thời gian… Thế hệ trẻ 18 thôn vườn trầu Hóc Môn – Bà Điểm nguyện cống hiến tuổi trẻ cho Tổ quốc, phấn đấu để ngọn lửa luôn rực sáng.”
+              </p>
+            </details>
+            <details>
+              <summary><b>Đoạn giới thiệu tổng quan</b> — Nhân Dân điện tử (trích)</summary>
+              <p>
+                “Đêm 22 rạng sáng 23/11/1940… Cuộc khởi nghĩa bùng nổ ở hầu khắp các tỉnh Nam Bộ… Nhiều đồn bốt địch bị phá, cờ đỏ sao vàng lần đầu tiên tung bay… Khởi nghĩa Nam Kỳ đã trở thành biểu tượng sáng ngời trong lịch sử cách mạng Việt Nam.”
+              </p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="thanh-vien">
+      <h2 class="section-title">Nhóm thực hiện</h2>
+      <div class="grid">
+        <div class="span-7">
+          <div class="card reveal">
+            <h3>Thành viên</h3>
+            <ul class="members">
+              <li>Nguyễn Đăng Quang Minh</li>
+              <li>Phạm Thị Ngoan</li>
+              <li>Trần Quang Minh</li>
+              <li>Cao Nguyễn Thanh Hằng</li>
+              <li>Phạm Nguyên Khánh Hà</li>
+            </ul>
+          </div>
+        </div>
+        <div class="span-5">
+          <div class="card reveal">
+            <h3>GV hướng dẫn</h3>
+            <p><b>Lê Thị Loan</b></p>
+            <p class="badge">Xin cảm ơn cô đã định hướng nội dung và nguồn tư liệu.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>Chi đoàn 11A7 — Báo tường “GIÓ NAM KỲ — THỔI BÙNG NGỌN LỬA KHỞI NGHĨA”</div>
+    <div style="margin-top:6px; font-size:.9rem">© 2025 — ndqm@v1</div>
+  </footer>
+
+  <script>
+    // IntersectionObserver for reveal on scroll
+    const io=new IntersectionObserver((es)=>{
+      es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, {threshold:.2});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // create floating sparks (lightweight)
+    const wrap=document.getElementById('sparks');
+    const make=()=>{ const s=document.createElement('span'); s.className='spark';
+      s.style.left=Math.random()*100+'%'; s.style.animationDuration=(4+Math.random()*5)+'s';
+      s.style.opacity=.5+Math.random()*.5; wrap.appendChild(s); setTimeout(()=>s.remove(), 9000);
+    };
+    setInterval(make, 800);
+
+    // Smooth scroll for anchor links (iOS friendly)
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{ const id=a.getAttribute('href'); const el=document.querySelector(id); if(!el) return;
+        e.preventDefault(); window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - 64, behavior:'smooth'});
+      });
+    });
+  </script>
+</body>
+</html>
